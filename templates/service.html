@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}">
+</head>
+<body>
+
+   <!---------------------------------------------------Navbar---------------------------------------------------->
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light border border-info rounded-pill m-4">
+        <div class="container-xl">
+            <a href="#" class="navbar-brand me-auto">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
+            </a>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Tourism</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('places') }}">Places</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('hotels') }}">Hotels</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('gallery') }}">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('blog') }}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" href="{{ url_for('service') }}">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('contactus') }}">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% if session.get('email') %}
+            <div class="dropdown">
+                <button class="btn bg-warning rounded-pill text-uppercase dropdown-toggle" type="button"
+                    id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ session['email'][0] }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><span class="dropdown-item-text text-muted">{{ session['email'] }}</span></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <a href="{{ url_for('auth_bp.signin') }}" class="btn bg-warning rounded-pill">Sign in</a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!---------------------------------------------cab booking---------------------------------------------->
+
+    <div class="container col-sm-12 mt-6">
+        <div class="row align-items-center custom-container">
+            <!-- Image Column -->
+            <div class="col-md-5">
+                <img src="{{ url_for('static', filename='images/service/cab.png') }}" class="img-fluid" alt="Cab Booking">
+            </div>
+
+            <!-- Text Column -->
+            <div class="col-md-7 col-sm-12">
+                <h2><strong>Cab Booking</strong></h2>
+                <p>
+                    Traveling to a new city or country can be exciting, but navigating unfamiliar routes and
+                    transportation systems can sometimes feel overwhelming. Cab booking services provide tourists with a
+                    hassle-free and reliable way to explore their destination.
+                </p>
+                <p>
+                    Many cab booking platforms offer features like GPS tracking, fare transparency, and multilingual
+                    drivers, ensuring safety and convenience.
+                </p>
+                <p><strong>Service:</strong> 24 X 7</p>
+                <div class="book-now">
+                    <a href="{{ url_for('cab_bp.cab_booking') }}" class="btn1">Book now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------hotel booking--------------------------------------------->
+
+    <div class="container my-5 col-sm-12">
+        <div class="row align-items-center custom-container">
+            <!-- Image Column -->
+            <div class="col-md-5">
+                <img src="{{ url_for('static', filename='images/service/hotelbook.jpg') }}" class="img-fluid" alt="Cab Booking">
+            </div>
+
+            <!-- Text Column -->
+            <div class="col-md-7 col-sm-12">
+                <h2><strong>Hotel Booking</strong></h2>
+                <p>
+                    Finding the right accommodation is a crucial part of any tourist's journey, and modern hotel booking
+                    services make this process easier than ever. Whether traveling for leisure or business, tourists can
+                    choose from a wide range of options that fit their preferences and budget, from luxurious five-star
+                    resorts to cozy budget-friendly hotels.
+                </p>
+                <p>
+                    Features such as flexible cancellation policies, secure payment options, and 24/7 customer support
+                    add to the convenience. Many hotels also offer exclusive deals, discounts, and packages for early
+                    bookings, making it even more affordable for tourists to secure their ideal stay.
+                </p>
+                <p><strong>Service:</strong> AC and Non AC</p>
+                <div class="book-now">
+                    <a href="book" class="btn1">Book now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-------------------------------------------------Food----------------------------------------------------->
+
+    <div class="container my-5 col-sm-12">
+        <div class="row align-items-center custom-container">
+            <!-- Image Column -->
+            <div class="col-md-5">
+                <img src="{{ url_for('static', filename='images/service/foodservice.jpg') }}" class="img-fluid" alt="Cab Booking">
+            </div>
+
+            <!-- Text Column -->
+            <div class="col-md-7 col-sm-12">
+                <h2><strong>Food Service</strong></h2>
+                <p>
+                    Exploring new destinations is incomplete without experiencing the local cuisine. Our food service
+                    ensures that travelers enjoy delicious, hygienic, and authentic meals that cater to their tastes and
+                    dietary preferences.
+                </p>
+                <p>
+                    Whether you crave traditional local dishes, continental flavors, or quick snacks on the go, we
+                    provide a variety of dining options, including street food tours, fine dining experiences, and
+                    home-style meals.
+                </p>
+                <p><strong>Service:</strong> Veg and Non-Veg</p>
+                <div class="book-now">
+                    <a href="book" class="btn1">Order now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------Parking-------------------------------------------------->
+
+    <div class="container my-5 col-sm-12">
+        <div class="row align-items-center custom-container">
+            <!-- Image Column -->
+            <div class="col-md-5">
+                <img src="{{ url_for('static', filename='images/service/parking.jpg') }}" class="img-fluid" alt="Cab Booking">
+            </div>
+
+            <!-- Text Column -->
+            <div class="col-md-7 col-sm-12">
+                <h2><strong>Parking Service</strong></h2>
+                <p>
+                    Finding secure and convenient parking while traveling can be challenging. Our tourism parking
+                    service ensures that you have access to safe, well-maintained, and easily accessible parking spaces
+                    near popular attractions, hotels, airports, and city centers
+                </p>
+                <p>
+                    Whether you’re traveling by car, rental vehicle, or tour bus, we provide reliable parking solutions
+                    that offer peace of mind.
+                </p>
+                <p><strong>Service:</strong>24 x 7</p>
+                <div class="book-now">
+                    <a href="book" class="btn1">Book now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-------------------------------------------------footer---------------------------------------------------->
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="contact-details">
+                <h4>Contact Us</h4>
+                <p><img src="{{ url_for('static', filename='images/icons/location.jpg') }}" alt="Location"> 123 Main Street, Tirunelveli, Tamilnadu</p>
+                <p><img src="{{ url_for('static', filename='images/icons/phone.jpg') }}" alt="Phone"> +91 98234 67548</p>
+                <p><img src="{{ url_for('static', filename='images/icons/email.webp') }}" alt="Email"> tourism@gmail.com</p>
+            </div>
+            <div class="social-links">
+                <h4>Follow Us</h4>
+                <a href="https://facebook.com" target="_blank">
+                    <img src="{{ url_for('static', filename='images/icons/facebook.jpg') }}" alt="Facebook">
+                </a>
+                <a href="https://instagram.com" target="_blank">
+                    <img src="{{ url_for('static', filename='images/icons/instagram.avif') }}" alt="Instagram">
+                </a>
+                <a href="https://twitter.com" target="_blank">
+                    <img src="{{ url_for('static', filename='images/icons/twitter.webp') }}" alt="Twitter">
+                </a>
+            </div>
+        </div>
+        <p>&copy; 2025 Tourism. All rights reserved.</p>
+    </footer>
+
+    <!-----------------------------------------------Java Script----------------------------------------------->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

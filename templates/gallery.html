@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lg-thumbnail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lg-autoplay.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lg-fullscreen.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}">
+</head>
+<body>
+
+<!---------------------------------------------------Navbar---------------------------------------------------->
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light border border-info rounded-pill m-4">
+        <div class="container-xl">
+            <a href="#" class="navbar-brand me-auto">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
+            </a>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Tourism</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('places') }}">Places</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('hotels') }}">Hotels</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" href="{{ url_for('gallery') }}">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('blog') }}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('service') }}">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('contactus') }}">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% if session.get('email') %}
+            <div class="dropdown">
+                <button class="btn bg-warning rounded-pill text-uppercase dropdown-toggle" type="button"
+                    id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ session['email'][0] }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><span class="dropdown-item-text text-muted">{{ session['email'] }}</span></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <a href="{{ url_for('auth_bp.signin') }}" class="btn bg-warning rounded-pill">Sign in</a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!---------------------------------------------------Gallery---------------------------------------------------->
+
+<div class="container mt-6">
+    <div class="row" id="lightgallery">
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4 img-container">
+            <a href="{{ url_for('static', filename='images/tour/solotour') }}" data-src="{{ url_for('static', filename='images/tour/solotour') }}">
+                <img src="{{ url_for('static', filename='images/tour/solotour') }}" class="img-fluid" alt="Single Tour">
+                <div class="img-overlay">Single Tour</div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4 img-container">
+            <a href="{{ url_for('static', filename='images/tour/bachelortour.jpg') }}" data-src="{{ url_for('static', filename='images/tour/bachelortour.jpg') }}">
+                <img src="{{ url_for('static', filename='images/tour/bachelortour.jpg') }}" class="img-fluid" alt="bachelor Tour">
+                <div class="img-overlay">bachelor Tour</div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4 img-container">
+            <a href="{{ url_for('static', filename='images/tour/familytour.webp') }}" data-src="{{ url_for('static', filename='images/tour/familytour.webp') }}">
+                <img src="{{ url_for('static', filename='images/tour/familytour.webp') }}" class="img-fluid" alt="Family Tour">
+                <div class="img-overlay">Family Tour</div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4 img-container">
+            <a href="{{ url_for('static', filename='images/tour/coupletour.jpg') }}" data-src="{{ url_for('static', filename='images/tour/coupletour.jpg') }}">
+                <img src="{{ url_for('static', filename='images/tour/coupletour.jpg') }}" class="img-fluid" alt="Couple Tour">
+                <div class="img-overlay">Couple Tour</div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4 img-container">
+            <a href="{{ url_for('static', filename='images/tour/collegetour.jpg') }}" data-src="{{ url_for('static', filename='images/tour/collegetour.jpg') }}">
+                <img src="{{ url_for('static', filename='images/tour/collegetour.jpg') }}" class="img-fluid" alt="College Tour">
+                <div class="img-overlay">College Tour</div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4 img-container">
+            <a href="{{ url_for('static', filename='images/service/travelguider.jpg') }}" data-src="{{ url_for('static', filename='images/service/travelguider.jpg') }}">
+                <img src="{{ url_for('static', filename='images/service/travelguider.jpg') }}" class="img-fluid" alt="Tour Guide">
+                <div class="img-overlay">Tour Guide</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-------------------------------------------------footer---------------------------------------------------->
+
+<footer class="footer mt-5">
+    <div class="footer-container">
+        <div class="contact-details">
+            <h4>Contact Us</h4>
+            <p><img src="{{ url_for('static', filename='images/icons/location.jpg') }}" alt="Location"> 123 Main Street, Tirunelveli, Tamilnadu</p>
+            <p><img src="{{ url_for('static', filename='images/icons/phone.jpg') }}" alt="Phone"> +91 98234 67548</p>
+            <p><img src="{{ url_for('static', filename='images/icons/email.webp') }}" alt="Email"> tourism@gmail.com</p>
+        </div>
+        <div class="social-links">
+            <h4>Follow Us</h4>
+            <a href="https://facebook.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/icons/facebook.jpg') }}" alt="Facebook">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/icons/instagram.avif') }}" alt="Instagram">
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/icons/twitter.webp') }}" alt="Twitter">
+            </a>
+        </div>
+    </div>
+    <p>&copy; 2025 Tourism. All rights reserved.</p>
+</footer>
+
+<!--------------------------------------------------java script---------------------------------------------->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/autoplay/lg-autoplay.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/fullscreen/lg-fullscreen.umd.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select the gallery container
+        let gallery = document.getElementById('lightgallery');
+
+        // Initialize LightGallery using vanilla JavaScript
+        lightGallery(gallery, {
+            selector: 'a',
+            plugins: [lgThumbnail,lgAutoplay,lgFullscreen], // Select items
+            thumbnail: true, // Enable thumbnails
+            download: true, // Enable download button
+            autoplay: true,
+            fullscreen: true,
+           
+            mode: 'lg-slide' // Set transition effect
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .blog-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .blog-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .small-card {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .small-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .small-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .small-content {
+            flex: 1;
+        }
+        .small-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .small-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!---------------------------------------------------Navbar---------------------------------------------------->
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light border border-info rounded-pill m-4">
+        <div class="container-xl">
+            <a href="#" class="navbar-brand me-auto">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
+            </a>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Tourism</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('places') }}">Places</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('hotels') }}">Hotels</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('gallery') }}">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" href="{{ url_for('blog') }}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('service') }}">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{{ url_for('contactus') }}">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% if session.get('email') %}
+            <div class="dropdown">
+                <button class="btn bg-warning rounded-pill text-uppercase dropdown-toggle" type="button"
+                    id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ session['email'][0] }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><span class="dropdown-item-text text-muted">{{ session['email'] }}</span></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <a href="{{ url_for('auth_bp.signin') }}" class="btn bg-warning rounded-pill">Sign in</a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+<!---------------------------------------------------Blog details------------------------------------------------>
+
+    <div class="container mt-6">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-header">
+                    <h2 id="blog-title">Blog Title</h2>
+                    <p id="blog-date" class="text-muted">Published on: </p>
+                </div>
+                <img id="blog-image" class="blog-img" src="" alt="Blog Image">
+                <p id="blog-content">Blog content will be displayed here.</p>
+                <a href="{{ url_for('blog') }}" class="btn btn-secondary mt-3">Back to Blogs</a>
+            </div>
+            <div class="col-md-4">
+                <h4>More Blogs</h4>
+                <div id="small-blogs"></div>
+            </div>
+        </div>
+    </div>
+
+<!-----------------------------------------------------Script---------------------------------------------------->
+
+    <script>
+        $(document).ready(function () {
+            const blogData = {
+                "1": {
+                    title: "India Gate",
+                    date: "March 7, 2025",
+                    image: "{{ url_for('static', filename='images/city/indiagate.webp') }}",
+                    content: `India Gate: A Tribute to the Brave Soldiers of India
+                            <h2> Introduction </h2>
+                            The India Gate, located in the heart of New Delhi, is one of India’s most iconic war memorials. Standing tall at 42 meters, this majestic structure was built to honor the 90,000 Indian soldiers who sacrificed their lives during World War I and the Third Anglo-Afghan War. Inspired by the Arc de Triomphe in Paris, the India Gate is not just a war memorial but also a symbol of national pride and patriotism.
+
+                            History of India Gate
+                            The foundation stone of India Gate was laid in 1921 by Duke of Connaught, and the memorial was designed by Sir Edwin Lutyens, the chief architect of New Delhi. It was completed in 1931 and was originally known as the All India War Memorial. The names of more than 13,000 soldiers are inscribed on its walls, paying homage to their bravery.
+
+                            In 1971, after the India-Pakistan War, the Amar Jawan Jyoti (Flame of the Immortal Soldier) was added under the arch to honor the soldiers who died during the Indo-Pak war of 1971.
+
+                            Architectural Beauty
+                            The India Gate is a masterpiece of colonial architecture, made of red and yellow sandstone and granite. Its inscriptions, including the word "INDIA" on both sides, add to its significance.
+
+                            Key Features of India Gate:
+                            The Arch: Resembling the Arc de Triomphe, it is built in Indo-European style.
+                            Amar Jawan Jyoti: The eternal flame, now relocated to the National War Memorial in 2022.
+                            Lush Lawns: Surrounding the monument, these gardens make it a popular picnic spot.
+                            Illuminated Beauty: The monument is beautifully lit up at night, creating a mesmerizing view.
+                            Best Time to Visit
+                            The best time to visit India Gate is early morning or late evening, especially during sunset or night, when the monument is illuminated. The winter months (October to March) are ideal as the weather is pleasant.
+
+                            India Gate Timings:
+                            Open 24/7
+                            Entry Fee: Free`,
+                    excerpt: "Discover the beauty of India Gate and its historical significance."
+                },
+                "2": {
+                    title: "Taj Mahal",
+                    date: "March 8, 2025",
+                    image: "{{ url_for('static', filename='images/city/tajmahal.jpeg') }}",
+                    content: `The Taj Mahal: A Timeless Symbol of Love
+                            Introduction
+                            The Taj Mahal, located in Agra, India, is one of the most breathtaking architectural wonders in the world. Built in the 17th century by Mughal Emperor Shah Jahan, this white marble mausoleum stands as an eternal symbol of love, dedicated to his beloved wife, Mumtaz Mahal. Recognized as a UNESCO World Heritage Site, the Taj Mahal attracts millions of visitors every year.
+
+                            History of the Taj Mahal
+                            The Taj Mahal’s history is deeply rooted in love and loss. Mumtaz Mahal, Shah Jahan’s favorite wife, passed away in 1631 while giving birth to their 14th child. Overwhelmed by grief, the emperor decided to build a monument in her memory. The construction began in 1632 and took around 22 years to complete, involving over 20,000 artisans.
+
+                            The design reflects a blend of Persian, Islamic, and Indian architecture, with perfect symmetry and stunning craftsmanship. The monument is surrounded by lush gardens, fountains, and reflecting pools, adding to its mesmerizing beauty.
+
+                            Architectural Beauty
+                            The Taj Mahal is famous for its white marble structure, which changes color depending on the time of day. The intricate carvings, calligraphy from the Quran, and semi-precious stone inlays make it a masterpiece of Mughal architecture.
+
+                            Key Highlights of the Taj Mahal:
+                            Main Mausoleum – The domed structure houses the tombs of Shah Jahan and Mumtaz Mahal.
+                            Four Minarets – These 40-meter-tall towers frame the main structure.
+                            Charbagh Gardens – A Persian-style symmetrical garden divided by water channels.
+                            Calligraphy and Inlay Work – Arabic inscriptions and floral motifs adorn the marble walls.
+                            Best Time to Visit
+                            The best time to visit the Taj Mahal is during sunrise or sunset, when the monument glows beautifully in the golden light. The ideal season is October to March, as the weather is pleasant.
+
+                            Taj Mahal Timings:
+                            Open: 6:00 AM – 6:30 PM (Closed on Fridays)
+                            Night Viewing: Available on full moon nights and two nights before & after.
+                            Interesting Facts About the Taj Mahal
+                            Changing Colors – The Taj Mahal appears pinkish at sunrise, white in the afternoon, and golden under moonlight.
+                            Optical Illusion – As you move closer, the minarets seem to lean away, preventing damage in case of an earthquake.
+                            Expensive Construction – It is estimated that the Taj Mahal cost around 32 million rupees (equivalent to billions today).
+                            Black Taj Mahal Myth – Legend says Shah Jahan planned a black marble Taj Mahal for himself, but he was overthrown before it could be built.
+                            How to Reach the Taj Mahal
+                            By Air: Nearest airport – Agra Airport (8 km from the Taj Mahal)
+                            By Train: Agra has multiple railway stations, with Agra Cantt being the main one.
+                            By Road: Well-connected via highways from Delhi (230 km) and Jaipur.
+                            Conclusion
+                            The Taj Mahal is more than just a monument; it is a timeless expression of love, art, and history. Whether you’re a history enthusiast, an architecture lover, or a traveler seeking beauty, the Taj Mahal is a must-visit destination.`,
+                    excerpt: "Explore the mesmerizing Taj Mahal, a symbol of eternal love."
+                },
+                "3": {
+                    title: "Charminar",
+                    date: "March 9, 2025",
+                    image: "{{ url_for('static', filename='images/city/hyderabad.jpg') }}",
+                    content: `Charminar: The Iconic Gateway of Hyderabad
+                            Introduction
+                            The Charminar, often referred to as the "Arc de Triomphe of the East," is one of Hyderabad’s most iconic landmarks. Located in the heart of the city, this grand structure was built in 1591 by Sultan Muhammad Quli Qutb Shah, the founder of Hyderabad. Charminar is not just a monument but also a symbol of the city's rich history, culture, and Indo-Islamic architecture.
+
+                            History of Charminar
+                            The Charminar was constructed to mark the end of a deadly plague that had affected Hyderabad. Sultan Quli Qutb Shah is believed to have prayed for relief from the epidemic and, in gratitude, built this grand structure at the center of his new capital.
+
+                            Another legend suggests that the monument was built to commemorate the founding of Hyderabad, replacing the old capital, Golconda.
+
+                            Architectural Beauty of Charminar
+                            The Charminar stands as a masterpiece of Indo-Islamic architecture with Persian influences.
+
+                            Key Features:
+                            Four Grand Minarets:
+
+                            The name "Charminar" means "Four Towers" in Persian.
+                            Each minaret is 48.7 meters (160 feet) tall and features spiral staircases with 149 steps.
+                            Massive Central Archway:
+
+                            The structure has four grand arches facing four directions, representing Hyderabad’s gateways.
+                            Intricate Stucco Work:
+
+                            The walls and arches are adorned with delicate stucco decorations, floral designs, and calligraphy.
+                            Secret Tunnel:
+
+                            Some believe that a secret underground tunnel connects Charminar to Golconda Fort, which was used for royal escapes.
+                            Mosque on the Top Floor:
+
+                            The second floor houses a mosque, making Charminar one of the few monuments that serve both religious and historical purposes.
+                            Best Time to Visit Charminar
+                            Timings: 9:30 AM – 5:30 PM (Open all days)
+                            Best Season: October – March (Cooler months for sightseeing)
+                            Entry Fee:
+                            Indians: ₹25
+                            Foreigners: ₹300
+                            Nearby Attractions
+                            Laad Bazaar: Famous for Hyderabadi bangles and pearls.
+                            Mecca Masjid: One of the oldest and largest mosques in India.
+                            Chowmahalla Palace: A beautiful palace of the Nizams.
+                            Golconda Fort: A historical fort known for its acoustic marvels.
+                            Hussain Sagar Lake: A picturesque lake with the famous Buddha Statue.
+                            Conclusion
+                            The Charminar is more than just a monument—it is the soul of Hyderabad, blending history, architecture, and cultural heritage. Whether you're a history buff, a photographer, or a traveler, visiting Charminar offers an unforgettable experience of Hyderabad’s royal past.
+
+                            Would you like to add details about local food or shopping recommendations?`,
+                    excerpt: "Experience the charm of Hyderabad, the city of pearls."
+                }
+            };
+
+            let urlParams = new URLSearchParams(window.location.search);
+            let currentPostId = urlParams.get("post") || "1";
+
+            function updateMainContent(postId) {
+                $("#blog-title").text(blogData[postId].title);
+                $("#blog-date").html("Published on: " + blogData[postId].date);
+                $("#blog-image").attr("src", blogData[postId].image);
+                $("#blog-content").text(blogData[postId].content);
+
+                let remainingPosts = Object.keys(blogData).filter(id => id !== postId);
+                $("#small-blogs").html("");
+
+                remainingPosts.forEach(id => {
+                    $("#small-blogs").append(`
+                        <div class="small-card" data-post="${id}">
+                            <img src="${blogData[id].image}" class="small-img">
+                            <div class="small-content">
+                                <div class="small-title">${blogData[id].title}</div>
+                                <p class="small-text">${blogData[id].excerpt}</p>
+                            </div>
+                        </div>
+                    `);
+                });
+
+                $(".small-card").click(function () {
+                    let newPostId = $(this).attr("data-post");
+                    updateMainContent(newPostId);
+                });
+            }
+
+            updateMainContent(currentPostId);
+        });
+    </script>
+
+<!-------------------------------------------------footer---------------------------------------------------->
+
+<footer class="footer mt-4">
+    <div class="footer-container">
+        <div class="contact-details">
+            <h4>Contact Us</h4>
+            <p><img src="{{ url_for('static', filename='images/icons/location.jpg') }}" alt="Location"> 123 Main Street, Tirunelveli, Tamilnadu</p>
+            <p><img src="{{ url_for('static', filename='images/icons/phone.jpg') }}" alt="Phone"> +91 98234 67548</p>
+            <p><img src="{{ url_for('static', filename='images/icons/email.webp') }}" alt="Email"> tourism@gmail.com</p>
+        </div>
+        <div class="social-links">
+            <h4>Follow Us</h4>
+            <a href="https://facebook.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/icons/facebook.jpg') }}" alt="Facebook">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/icons/instagram.avif') }}" alt="Instagram">
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/icons/twitter.webp') }}" alt="Twitter">
+            </a>
+        </div>
+    </div>
+    <p>&copy; 2025 Tourism. All rights reserved.</p>
+</footer>
+
+<!------------------------------------------------script---------------------------------------------------->
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+crossorigin="anonymous"></script>
+
+</body>
+</html>

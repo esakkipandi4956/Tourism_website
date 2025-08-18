@@ -1,0 +1,587 @@
+
+/*......................................................Navbar.................................................*/
+
+.navbar-brand img{
+    width: 60px;
+    height: 50px;
+}
+
+.btn:hover{
+    background-color: red;
+}
+
+.navbar-toggler{
+    border: none;
+}
+
+.navbar-toggler:focus, .btn-close:focus{
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link{
+    color: blue;
+    font-weight: 500;
+}
+
+.nav-link:hover{
+    color: orange;
+}
+
+.navbar-nav .nav-link.active {
+    color: orange;
+}
+
+.btn.text-uppercase {
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+}
+
+
+/*......................................................Slider.................................................*/
+
+.slides {
+    height: 90vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+    inset: 0;
+    animation: slide-show 12s infinite;
+}
+
+.slide2 {
+    animation-delay: 4s;
+}
+
+.slide3 {
+    animation-delay: 8s;
+}
+
+.slide-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: white;
+}
+
+.pop-text {
+    font-size: 50px;
+    opacity: 0;
+    animation: popEffect 1s forwards;
+    
+}
+
+.slide1 h1 {
+    animation-delay: 0.5s;
+}
+
+/* Delay pop effect for each slide */
+.slide2 h1 {
+    animation-delay: 4.5s;
+}
+
+.slide3 h1 {
+    animation-delay: 8.5s;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Image Fade Animation */
+@keyframes slide-show {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    20%, 30% {
+        opacity: 1;
+        scale: 1.03;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Text Pop Animation */
+@keyframes popEffect {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .slides {
+        height: 60vh;
+    }
+    .pop-text {
+        font-size: 30px;
+      
+    }
+}
+
+
+/*..........................................Trending destinations...............................................*/
+
+.mt-6{
+    margin-top: 100px;
+}
+.destination-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.destination-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.destination-card:hover img {
+    transform: scale(1.05);
+}
+.destination-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.destination-text img {
+    width: 20px;
+    height: 15px;
+    margin-left: 5px;
+}
+
+/*................................................About us......................................................*/
+
+.content-section {
+    padding: 40px;
+}
+
+.image-container {
+    position: relative;
+    width: 350px;
+    height: 250px;
+    margin: auto;
+}
+
+.image-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.back-image {
+    z-index: 1;
+}
+
+.front-image {
+    z-index: 2;
+}
+
+/* Hover effect */
+.image-container:hover .front-image {
+    transform: translate(-20px, 20px); /* Move bottom-left */
+}
+
+.image-container:hover .back-image {
+    transform: translate(20px, -20px); /* Move top-right */
+}
+
+.text-container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.text-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+.text-container p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.text-container .source {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/*.........................................Our service horizontal scroll.........................................*/
+.our-services-heading {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Wrapper for scrolling effect */
+.scroll-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Scrolling content wrapper */
+.scroll-wrapper {
+    display: flex;
+    width: max-content; /* Allows smooth infinite effect */
+    animation: scrollLeft 20s linear infinite;
+}
+
+/* Individual image containers */
+.image-box {
+    text-align: center;
+    margin-right: 50px; /* Spacing between images */
+}
+
+/* Image styling */
+.image-box img {
+    width: 300px; /* Adjust size as needed */
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Headings styling */
+.image-box h4 {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Continuous scrolling animation */
+@keyframes scrollLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+
+/*..................................................House booting................................................*/
+
+.book-now .btn1 {
+    background-color:orange;
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.book-now .btn1:hover {
+    background-color:red;
+}
+
+/*.................................................Plan your trip.................................................*/
+
+.specialization {
+    text-align: center;
+    padding: 50px 0;
+}
+.specialization h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+.specialization-item {
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+.specialization-item:hover {
+    transform: scale(1.05);
+}
+.specialization-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.specialization-item h2 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/*....................................................footer.....................................................*/
+
+.footer {
+    background-color:navy;
+    color: #f5f5f5;
+    padding: 20px 0;
+    text-align: center;
+}
+  
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+  
+.contact-details, .social-links {
+    margin: 10px;
+}
+  
+.contact-details h4, .social-links h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+  
+.contact-details p {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+  
+.contact-details img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+  
+.social-links a {
+    display: inline-block;
+    margin: 5px;
+    transition: transform 0.3s ease;
+}
+  
+.social-links img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: box-shadow 0.3s ease;
+}
+  
+.social-links a:hover img {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
+}
+
+/*....................................................cab booking................................................*/
+
+.custom-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*..............................................contact us........................................................*/
+
+.mt-8{
+    margin-top: 125px;
+}
+
+.mt-7{
+    margin-top: 250px;
+}
+
+.card-container2 {
+    display: flex;
+    margin-top: 30px;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card2 {
+    border: 2px solid  #002d62;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.card2 .icon2 {
+    font-size: 40px;
+    color: #f4a100;
+    margin-bottom: 10px;
+}
+.card2 h3 {
+    font-size: 18px;
+    color: #f4a100;
+    margin-bottom: 10px;
+}
+.card2 p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+@media (max-width: 768px) {
+    .card2 {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/*...................................................bookcard.................................................*/
+
+.bookcard {
+    border: none;
+    overflow: hidden;
+    position: relative;
+}
+.bookcard img {
+    width: 100%;
+    height: 250px; /* Adjust height */
+    object-fit: cover;
+}
+
+.book-btn {
+    width: 100%;
+    font-size: 1rem;
+}
+  
+/*...................................................Gallery....................................................*/
+
+.img-container {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-fluid {
+    width: 400px;
+    height: 250px;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 165, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.img-container:hover .img-fluid {
+    transform: scale(1.1);
+}
+
+.img-container:hover .img-overlay {
+    background: rgba(255, 165, 0, 0.7);
+    opacity: 1;
+}
+
+.mt-6{
+    margin-top: 100px;
+}
+
+/*...................................................Booking card....................................................*/
+
+.card {
+      transition: transform 0.4s ease;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #dc3545;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .btn-book {
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-book:hover {
+      background-color: #198754;
+      transform: scale(1.05);
+    }
+
+
+
+
+
+
+.hover-reveal-offer .offer-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #dc3545; /* Bootstrap danger color */
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.hover-reveal-offer:hover .offer-badge {
+  opacity: 1;
+}
+
